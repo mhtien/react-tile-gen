@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
 test('Jest is working', () => {
@@ -9,4 +9,11 @@ test('Jest is working', () => {
 test('Check title loads', () => {
   render(<App></App>);
   screen.getByText('Tile Generator');
+});
+
+test('add color picker', () => {
+  render(<App></App>);
+  const addButton = screen.getByText('+');
+  fireEvent.click(addButton);
+  screen.getByDisplayValue('#c4c4c4');
 });
