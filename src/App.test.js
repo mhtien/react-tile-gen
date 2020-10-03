@@ -17,3 +17,5 @@ test('add color picker', () => {
   fireEvent.click(addButton);
   screen.getByDisplayValue('#c4c4c4');
 });
+
+test('')

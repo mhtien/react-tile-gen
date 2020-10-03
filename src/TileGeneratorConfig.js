@@ -1,7 +1,7 @@
 import React from 'react';
 import FieldSet from './FieldSet';
 import RadioButton from './RadioButton';
-import TextInput from './TextInput';
+import CustomInput from './CustomInput';
 
 const TileGeneratorConfig = ({
   colorInputs,
@@ -16,11 +16,15 @@ const TileGeneratorConfig = ({
   updateShapeType,
   scale,
   updateScale,
+  tileHeight,
+  updateTileHeight,
+  tileWidth,
+  updateTileWidth,
 }) => {
   // maps out the color pickers
   let colorPickers = colorInputs.map((color, index) => {
     return (
-      <TextInput
+      <CustomInput
         key={`color-${index}`}
         name="color-picker"
         type="color"
@@ -28,7 +32,7 @@ const TileGeneratorConfig = ({
         onChange={(event) => updateColorValue(event, index)}
       >
         Colour
-      </TextInput>
+      </CustomInput>
     );
   });
 
@@ -50,27 +54,30 @@ const TileGeneratorConfig = ({
       updateColorInputs([...colorInputs].slice(0, -1));
     }
   };
+  const submitHandler = (event) => {
+    event.preventDefault();
+  }
 
   return (
     <main>
-      <form>
+      <form onSubmit={submitHandler}>
         <FieldSet className="tile-generator_config_grid" title="Grid">
-          <TextInput
+          <CustomInput
             name="row-input"
             value={row}
             type="number"
             onChange={(event) => updateRow(event.target.value)}
           >
             Rows
-          </TextInput>
-          <TextInput
+          </CustomInput>
+          <CustomInput
             name="column-input"
             value={column}
             type="number"
             onChange={(event) => updateColumn(event.target.value)}
           >
             Columns
-          </TextInput>
+          </CustomInput>
         </FieldSet>
         <FieldSet className="tile-generator_config_color" title="Colour">
           <button type="button" onClick={addColorPicker}>
@@ -122,6 +129,26 @@ const TileGeneratorConfig = ({
           >
             Rectangle
           </RadioButton>
+          <CustomInput
+            type="number"
+            name="tile-height"
+            className="tile-height"
+            max="1200"
+            step="10"
+            value={tileHeight}
+            onChange={(e) => updateTileHeight(e.target.value)}
+          >Tile Height
+          </CustomInput>
+          {shape === "rectangle" ? <CustomInput
+            type="number"
+            name="tile-width"
+            className="tile-width"
+            max="1200"
+            step="10"
+            value={tileWidth}
+            onChange={(e) => updateTileWidth(e.target.value)}
+          >Tile Width
+          </CustomInput> : null}
         </FieldSet>
         <FieldSet className="tile-generator_config_scale" title="Scale">
           <RadioButton
@@ -165,8 +192,9 @@ const TileGeneratorConfig = ({
             1:50
           </RadioButton>
         </FieldSet>
+        <button>Generate My Tiles</button>
       </form>
-    </main>
+    </main >
   );
 };
 
