@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components"
 
+const randomNumber = (num) => Math.floor(Math.random() * num);
+
 const TileDiv = styled.div`
   display:inline-block;
   border: 1px solid green;
   height: ${props => props.tileHeight};
   width: ${props => props.updateWidth};
-  background-color:${props => props.colorInputs[0]};
+  background-color:${props => props.colorInputs[randomNumber(props.colorInputs.length)]};
   `
 
 const RowDiv = styled.div`
